@@ -1,0 +1,23 @@
+@WebApplication2_HostAddress = http://localhost:5175
+
+POST {{WebApplication2_HostAddress}}/api/content
+Content-Type: application/json
+
+{
+	"slug": "introducao-ao-cache-distribuido",
+	"title": "Introducao ao Cache Distribuido",
+	"body": "Conteudo inicial para validar throughput e latencia.",
+	"tags": ["performance", "cache", "dotnet"]
+}
+
+###
+
+GET {{WebApplication2_HostAddress}}/api/content?page=1&pageSize=10&tag=cache
+Accept: application/json
+
+###
+
+GET {{WebApplication2_HostAddress}}/api/content/slug/introducao-ao-cache-distribuido
+Accept: application/json
+
+###
