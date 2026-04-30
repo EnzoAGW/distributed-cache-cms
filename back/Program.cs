@@ -14,6 +14,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddResponseCompression();
 
+// CORS — permite o front Next.js em desenvolvimento
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
 // Options
 builder.Services.Configure<ContentCacheOptions>(
     builder.Configuration.GetSection(ContentCacheOptions.SectionName));
@@ -98,6 +107,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseResponseCompression();
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
