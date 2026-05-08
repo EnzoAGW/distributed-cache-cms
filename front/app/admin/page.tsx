@@ -107,10 +107,10 @@ export default function AdminPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold">Painel Admin</h1>
+      <h1 className="text-xl sm:text-2xl font-bold">Painel Admin</h1>
 
       {/* Formulário */}
-      <section className="bg-white rounded-xl border border-gray-200 p-6">
+      <section className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
         <h2 className="font-semibold text-lg mb-4">{editing ? "Editar artigo" : "Novo artigo"}</h2>
 
         {error && (
@@ -125,7 +125,7 @@ export default function AdminPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
               <input
@@ -165,7 +165,7 @@ export default function AdminPage() {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-y"
             />
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <button
               type="submit"
               disabled={submitting}
@@ -196,16 +196,16 @@ export default function AdminPage() {
             {articles.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-xl border border-gray-200 px-4 py-3 flex items-center gap-3"
+                className="bg-white rounded-xl border border-gray-200 px-3 sm:px-4 py-3 flex flex-wrap items-center gap-2 sm:gap-3"
               >
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-sm truncate">{item.title}</p>
-                  <p className="text-xs text-gray-400">{item.slug}</p>
+                  <p className="text-xs text-gray-400 truncate">{item.slug}</p>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-1.5 sm:gap-2 shrink-0">
                   <Link
                     href={`/articles/${item.id}`}
-                    className="text-xs text-gray-500 hover:text-gray-900 px-2 py-1 rounded hover:bg-gray-100"
+                    className="text-xs text-gray-500 hover:text-gray-900 px-2 py-1.5 rounded hover:bg-gray-100 transition-colors"
                   >
                     Ver
                   </Link>
@@ -217,13 +217,13 @@ export default function AdminPage() {
                       setError("");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="text-xs text-indigo-600 hover:text-indigo-800 px-2 py-1 rounded hover:bg-indigo-50"
+                    className="text-xs text-indigo-600 hover:text-indigo-800 px-2 py-1.5 rounded hover:bg-indigo-50 transition-colors"
                   >
                     Editar
                   </button>
                   <button
                     onClick={() => handleDelete(item)}
-                    className="text-xs text-red-600 hover:text-red-800 px-2 py-1 rounded hover:bg-red-50"
+                    className="text-xs text-red-600 hover:text-red-800 px-2 py-1.5 rounded hover:bg-red-50 transition-colors"
                   >
                     Deletar
                   </button>

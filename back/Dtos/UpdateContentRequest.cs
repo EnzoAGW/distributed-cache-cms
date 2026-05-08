@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication2.Dtos;
 
-public sealed class UpdateContentRequest
+public sealed class UpdateContentRequest : IValidatableObject
 {
     [Required]
     [MaxLength(120)]
@@ -26,4 +26,14 @@ public sealed class UpdateContentRequest
     /// version no longer matches — prevents lost updates under concurrent edits.
     /// </summary>
     public long? ExpectedVersion { get; init; }
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        foreach (var tag in Tags)
+        {
+            if (tag.Length > 50)
+                yield return new ValidationResult(
+                    "Each tag must be at most 50 characters.", [nameof(Tags)]);
+        }
+    }
 }

@@ -29,8 +29,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-sm mx-auto mt-16">
-      <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+    <div className="max-w-sm mx-auto mt-8 sm:mt-16">
+      <h1 className="text-xl sm:text-2xl font-bold mb-6 text-center">Login</h1>
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-3 py-2 text-sm">

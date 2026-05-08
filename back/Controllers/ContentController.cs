@@ -8,6 +8,7 @@ namespace WebApplication2.Controllers;
 
 [ApiController]
 [Route("api/content")]
+[Produces("application/json")]
 public sealed class ContentController : ControllerBase
 {
     private readonly IContentService _contentService;
@@ -20,9 +21,11 @@ public sealed class ContentController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(PagedResult<ContentResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<PagedResult<ContentResponse>>> ListAsync(
-        [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 20,
+        [FromQuery][System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)] int page = 1,
+        [FromQuery][System.ComponentModel.DataAnnotations.Range(1, 100)] int pageSize = 20,
         [FromQuery] string? tag = null,
         [FromQuery] string? search = null,
         CancellationToken cancellationToken = default)
@@ -38,6 +41,9 @@ public sealed class ContentController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ContentResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ContentResponse>> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var item = await _contentService.GetByIdAsync(id, cancellationToken);
@@ -58,6 +64,9 @@ public sealed class ContentController : ControllerBase
     }
 
     [HttpGet("slug/{slug}")]
+    [ProducesResponseType(typeof(ContentResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status304NotModified)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ContentResponse>> GetBySlugAsync(string slug, CancellationToken cancellationToken)
     {
         var item = await _contentService.GetBySlugAsync(slug, cancellationToken);
@@ -79,6 +88,10 @@ public sealed class ContentController : ControllerBase
 
     [Authorize]
     [HttpPost]
+    [ProducesResponseType(typeof(ContentResponse), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<ContentResponse>> CreateAsync(
         [FromBody] CreateContentRequest request,
         CancellationToken cancellationToken)
@@ -91,11 +104,16 @@ public sealed class ContentController : ControllerBase
             cancellationToken);
 
         _logger.LogInformation("Content created: {Id} (slug: {Slug})", created.Id, created.Slug);
-        return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, ToResponse(created));
+        return Created($"/api/content/{created.Id}", ToResponse(created));
     }
 
     [Authorize]
     [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(ContentResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<ContentResponse>> UpdateAsync(
         Guid id,
         [FromBody] UpdateContentRequest request,
@@ -121,6 +139,9 @@ public sealed class ContentController : ControllerBase
 
     [Authorize]
     [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteAsync(Guid id, CancellationToken cancellationToken)
     {
         var deleted = await _contentService.DeleteAsync(id, cancellationToken);

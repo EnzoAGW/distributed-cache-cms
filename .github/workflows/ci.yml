@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore WebApplication2/WebApplication2.Tests/WebApplication2.Tests.csproj
+
+      - name: Build
+        run: dotnet build WebApplication2/WebApplication2.Tests/WebApplication2.Tests.csproj --no-restore --configuration Release
+
+      - name: Run tests
+        run: dotnet test WebApplication2/WebApplication2.Tests/WebApplication2.Tests.csproj --no-build --configuration Release --verbosity normal
+
+  docker-build:
+    name: Docker Build Check
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build back-end image
+        run: docker build -t cms-back ./WebApplication2/back
+
+      - name: Build front-end image
+        run: |
+          docker build \
+            --build-arg NEXT_PUBLIC_API_URL=http://localhost:8080 \
+            -t cms-front \
+            ./WebApplication2/front

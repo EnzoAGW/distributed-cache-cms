@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using WebApplication2.Dtos;
@@ -13,25 +15,31 @@ namespace WebApplication2.Controllers;
 [Route("api/auth")]
 public sealed class AuthController : ControllerBase
 {
-    // Demo credentials — replace with a real user store in production.
-    private const string DemoUsername = "admin";
-    private const string DemoPassword = "admin123";
-
     private readonly JwtOptions _jwtOptions;
+    private readonly AdminOptions _adminOptions;
 
-    public AuthController(IOptions<JwtOptions> jwtOptions)
+    public AuthController(IOptions<JwtOptions> jwtOptions, IOptions<AdminOptions> adminOptions)
     {
         _jwtOptions = jwtOptions.Value;
+        _adminOptions = adminOptions.Value;
     }
 
-    /// <summary>
-    /// Returns a JWT token for valid credentials.
-    /// Demo credentials: username=admin, password=admin123
-    /// </summary>
+    [EnableRateLimiting("auth-fixed")]
     [HttpPost("token")]
-    public ActionResult<TokenResponse> Token([FromBody] LoginRequest request)
+    [ProducesResponseType(typeof(TokenResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
+    public ActionResult<TokenResponse> Token([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
-        if (request.Username != DemoUsername || request.Password != DemoPassword)
+        var usernameMatch = CryptographicOperations.FixedTimeEquals(
+            Encoding.UTF8.GetBytes(request.Username),
+            Encoding.UTF8.GetBytes(_adminOptions.Username));
+        var passwordMatch = CryptographicOperations.FixedTimeEquals(
+            Encoding.UTF8.GetBytes(request.Password),
+            Encoding.UTF8.GetBytes(_adminOptions.Password));
+
+        if (!usernameMatch || !passwordMatch)
         {
             return Unauthorized(new ProblemDetails
             {

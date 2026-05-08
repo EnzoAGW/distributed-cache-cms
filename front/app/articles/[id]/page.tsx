@@ -59,27 +59,29 @@ export default function ArticlePage() {
         ← Voltar para artigos
       </Link>
 
-      <article className="bg-white rounded-xl border border-gray-200 p-6">
-        <h1 className="text-2xl font-bold mb-2">{article.title}</h1>
+      <article className="bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
+        <h1 className="text-xl sm:text-2xl font-bold mb-3">{article.title}</h1>
 
-        <div className="flex items-center gap-2 flex-wrap mb-4">
-          {article.tags.map((t) => (
-            <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2 py-0.5 rounded-full">
-              {t}
-            </span>
-          ))}
-          <span className="ml-auto text-xs text-gray-400">
+        <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-2 mb-4">
+          <div className="flex flex-wrap gap-1.5">
+            {article.tags.map((t) => (
+              <span key={t} className="bg-indigo-50 text-indigo-700 text-xs px-2 py-0.5 rounded-full">
+                {t}
+              </span>
+            ))}
+          </div>
+          <span className="sm:ml-auto text-xs text-gray-400">
             Publicado em {new Date(article.createdAtUtc).toLocaleDateString("pt-BR")}
           </span>
         </div>
 
-        <div className="text-gray-700 leading-relaxed whitespace-pre-wrap border-t border-gray-100 pt-4">
+        <div className="text-gray-700 leading-relaxed whitespace-pre-wrap break-words border-t border-gray-100 pt-4">
           {article.body}
         </div>
       </article>
 
       {token && (
-        <div className="flex gap-3 mt-4">
+        <div className="flex flex-wrap gap-3 mt-4">
           <Link
             href={`/admin?edit=${article.id}`}
             className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg transition-colors"

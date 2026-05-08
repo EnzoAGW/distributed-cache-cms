@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using WebApplication2.Exceptions;
 using WebApplication2.Models;
 
 namespace WebApplication2.Repositories;
@@ -73,13 +74,18 @@ public sealed class InMemoryContentRepository : IContentRepository
         }
     }
 
-    public Task<ContentItem?> UpdateAsync(ContentItem item, CancellationToken cancellationToken)
+    public Task<ContentItem?> UpdateAsync(ContentItem item, long? expectedVersion, CancellationToken cancellationToken)
     {
         lock (_writeLock)
         {
             if (!_items.TryGetValue(item.Id, out var current))
             {
                 return Task.FromResult<ContentItem?>(null);
+            }
+
+            if (expectedVersion.HasValue && current.Version != expectedVersion.Value)
+            {
+                throw new ConcurrencyConflictException(expectedVersion.Value, current.Version);
             }
 
             if (!current.Slug.Equals(item.Slug, StringComparison.OrdinalIgnoreCase))
@@ -95,6 +101,15 @@ public sealed class InMemoryContentRepository : IContentRepository
 
             _items[item.Id] = Clone(item);
             return Task.FromResult<ContentItem?>(Clone(item));
+        }
+    }
+
+    public void Reset()
+    {
+        lock (_writeLock)
+        {
+            _items.Clear();
+            _slugIndex.Clear();
         }
     }
 

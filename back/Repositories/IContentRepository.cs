@@ -12,7 +12,7 @@ public interface IContentRepository
 
     Task<ContentItem> CreateAsync(ContentItem item, CancellationToken cancellationToken);
 
-    Task<ContentItem?> UpdateAsync(ContentItem item, CancellationToken cancellationToken);
+    Task<ContentItem?> UpdateAsync(ContentItem item, long? expectedVersion, CancellationToken cancellationToken);
 
     Task<ContentItem?> DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

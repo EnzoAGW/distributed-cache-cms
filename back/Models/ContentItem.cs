@@ -4,17 +4,17 @@ public sealed class ContentItem
 {
     public Guid Id { get; init; }
 
-    public string Slug { get; set; } = string.Empty;
+    public string Slug { get; init; } = string.Empty;
 
-    public string Title { get; set; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
 
-    public string Body { get; set; } = string.Empty;
+    public string Body { get; init; } = string.Empty;
 
-    public string[] Tags { get; set; } = [];
+    public string[] Tags { get; init; } = [];
 
     public DateTimeOffset CreatedAtUtc { get; init; }
 
-    public DateTimeOffset UpdatedAtUtc { get; set; }
+    public DateTimeOffset UpdatedAtUtc { get; init; }
 
-    public long Version { get; set; }
+    public long Version { get; init; }
 }
