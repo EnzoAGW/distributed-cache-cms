@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useEffect, useState, useCallback } from "react";
+import { Suspense, useEffect, useState, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -17,7 +17,7 @@ import { useAuth } from "@/lib/auth-context";
 
 const empty = { slug: "", title: "", body: "", tags: "" };
 
-export default function AdminPage() {
+function AdminPageContent() {
   const { token } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -236,5 +236,13 @@ export default function AdminPage() {
         )}
       </section>
     </div>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense>
+      <AdminPageContent />
+    </Suspense>
   );
 }
