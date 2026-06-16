@@ -20,13 +20,13 @@ jobs:
           dotnet-version: "10.0.x"
 
       - name: Restore dependencies
-        run: dotnet restore WebApplication2.Tests/WebApplication2.Tests.csproj
+        run: dotnet restore project.Tests/WebApplication2.Tests.csproj
 
       - name: Build
-        run: dotnet build WebApplication2.Tests/WebApplication2.Tests.csproj --no-restore --configuration Release
+        run: dotnet build project.Tests/WebApplication2.Tests.csproj --no-restore --configuration Release
 
       - name: Run tests
-        run: dotnet test WebApplication2.Tests/WebApplication2.Tests.csproj --no-build --configuration Release --verbosity normal
+        run: dotnet test project.Tests/WebApplication2.Tests.csproj --no-build --configuration Release --verbosity normal
 
   docker-build:
     name: Docker Build Check
