@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8Be2SCmGpbs=",
+  "dgSpecHash": "sU1vHBxCvk0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\WebApplication2.Tests\\WebApplication2.Tests.csproj",
+  "projectFilePath": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\project.Tests\\WebApplication2.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Asus\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\Asus\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\10.0.5\\microsoft.aspnetcore.authentication.jwtbearer.10.0.5.nupkg.sha512",

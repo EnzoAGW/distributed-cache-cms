@@ -1,0 +1,61 @@
+# ── .NET / ASP.NET Core ──────────────────────────────────────────────────────
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.log
+TestResults/
+
+# Publish output
+publish/
+out/
+
+# Secrets & config with sensitive data
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+*.pfx
+*.p12
+secrets.json
+
+# ── Node / Next.js ───────────────────────────────────────────────────────────
+node_modules/
+.next/
+out/
+build/
+
+# Coverage
+coverage/
+
+# TypeScript build info
+*.tsbuildinfo
+next-env.d.ts
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ── Environment & Secrets ────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+# Keep the example file tracked
+!.env.example
+
+# ── Docker ───────────────────────────────────────────────────────────────────
+# docker-compose.override.yml  # uncomment if you use local overrides
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ──────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/settings.json
+*.swp
+*.swo

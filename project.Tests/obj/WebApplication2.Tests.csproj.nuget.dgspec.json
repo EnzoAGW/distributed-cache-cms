@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\WebApplication2.Tests\\WebApplication2.Tests.csproj": {}
+    "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\project.Tests\\WebApplication2.Tests.csproj": {}
   },
   "projects": {
     "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\back\\WebApplication2.csproj": {
@@ -518,14 +518,14 @@
         }
       }
     },
-    "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\WebApplication2.Tests\\WebApplication2.Tests.csproj": {
+    "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\project.Tests\\WebApplication2.Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\WebApplication2.Tests\\WebApplication2.Tests.csproj",
+        "projectUniqueName": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\project.Tests\\WebApplication2.Tests.csproj",
         "projectName": "WebApplication2.Tests",
-        "projectPath": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\WebApplication2.Tests\\WebApplication2.Tests.csproj",
+        "projectPath": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\project.Tests\\WebApplication2.Tests.csproj",
         "packagesPath": "C:\\Users\\Asus\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\WebApplication2.Tests\\obj\\",
+        "outputPath": "C:\\Users\\Asus\\Documents\\last_dance\\WebApplication2\\project.Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
